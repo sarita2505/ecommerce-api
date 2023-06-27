@@ -1,7 +1,6 @@
 package com.java.ecom.service;
 
 import com.java.ecom.entity.Product;
-import com.java.ecom.entity.User;
 import com.java.ecom.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
