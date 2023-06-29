@@ -1,6 +1,6 @@
 package com.java.ecom.exception;
 
-public class ErrorResponse extends Throwable {
+public class ErrorResponse  {
     private String errorCode;
     private String message;
 

@@ -18,70 +18,47 @@ import java.util.List;
 public class ProductController {
     private IProductService productService;
 
-    GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
-
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) throws ErrorResponse {
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product savedUser = productService.createProduct(product);
         ResponseEntity<Product> productResponseEntity = null;
-        try {
-            productResponseEntity = new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-        } catch (Exception e) {
-            throw globalExceptionHandler.handleException(e);
-        }
+        productResponseEntity = new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         return productResponseEntity;
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") String userId) throws ErrorResponse {
+    public ResponseEntity<Product> getProductById(@PathVariable("id") String userId) {
         Product product = productService.getProductById(userId);
-        try {
-            if (product != null) {
-                return new ResponseEntity<>(product, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            throw globalExceptionHandler.handleProductNotFoundException((ProductNotFoundException) e);
+        if (product.getId() != null) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
         }
 
         return null;
     }
 
-    // http://localhost:8080/api/users
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() throws ErrorResponse {
+    public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getProducts();
         ResponseEntity<List<Product>> listResponseEntity = null;
-        try {
-            listResponseEntity = new ResponseEntity<>(products, HttpStatus.OK);
-        } catch (Exception e) {
-            throw globalExceptionHandler.handleProductNotFoundException((ProductNotFoundException) e);
-        }
+        listResponseEntity = new ResponseEntity<>(products, HttpStatus.OK);
         return listResponseEntity;
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") String userId,
-                                                 @RequestBody Product product) throws ErrorResponse {
+                                                 @RequestBody Product product) {
         product.setId(userId);
         Product updatedProduct = productService.updateProduct(product);
         ResponseEntity<Product> productResponseEntity = null;
-        try {
-            productResponseEntity = new ResponseEntity<>(updatedProduct, HttpStatus.OK);
-        } catch (Exception e) {
-            throw globalExceptionHandler.handleProductNotFoundException((ProductNotFoundException) e);
-        }
+        productResponseEntity = new ResponseEntity<>(updatedProduct, HttpStatus.OK);
         return productResponseEntity;
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") String userId) throws ErrorResponse {
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") String userId) {
         productService.deleteProduct(userId);
         ResponseEntity<String> stringResponseEntity = null;
-        try {
-            stringResponseEntity = new ResponseEntity<>("Product successfully deleted!", HttpStatus.OK);
-        } catch (Exception e) {
-            throw globalExceptionHandler.handleProductNotFoundException((ProductNotFoundException) e);
-        }
+        stringResponseEntity = new ResponseEntity<>("Product successfully deleted!", HttpStatus.OK);
         return stringResponseEntity;
     }
 }
