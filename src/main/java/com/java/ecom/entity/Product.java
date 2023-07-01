@@ -1,5 +1,6 @@
 package com.java.ecom.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,6 +20,7 @@ public class Product {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+
     private String id;
     //@Column(nullable = false)
     private String name;
@@ -26,4 +29,10 @@ public class Product {
     //@Column(nullable = false)
     //private String[] images;
     private String description;
+    private String productType;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+//    @JsonIgnoreProperties("product")
+    private List<Image> image;
+
 }
