@@ -22,8 +22,6 @@ public class Image {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String imageLink;
-    // @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sequence;
 
     @ManyToOne

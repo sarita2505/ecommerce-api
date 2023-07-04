@@ -1,22 +1,22 @@
 package com.java.ecom.exception;
 
 public class ErrorResponse  {
-    private String errorCode;
+    private ErrorCode errorCode;
     private String message;
 
     public ErrorResponse() {
     }
 
-    public ErrorResponse(String errorCode, String message) {
+    public ErrorResponse(ErrorCode errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;
     }
 
-    public String getErrorCode() {
+    public ErrorCode getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 

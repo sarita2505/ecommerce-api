@@ -2,10 +2,11 @@ package com.java.ecom.service.imageService;
 
 import com.java.ecom.entity.Image;
 import com.java.ecom.entity.Product;
-import com.java.ecom.exception.ProductNotFoundException;
+import com.java.ecom.exception.AppRuntimeException;
 import com.java.ecom.repository.ImageRepository;
 import com.java.ecom.service.IProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,9 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class ImageServiceImpl implements IimageService {
+    @Autowired
     private ImageRepository imageRepository;
+    @Autowired
     private IProductService productService;
 
     @Override
@@ -37,10 +40,10 @@ public class ImageServiceImpl implements IimageService {
             if (optionalImage.isPresent()) {
                 return optionalImage.get();
             }
+            throw new AppRuntimeException("Image not present");
         } catch (Exception e) {
-                throw new ProductNotFoundException(e.getMessage());
+                throw new AppRuntimeException(e, "Error while getting image");
         }
-        return null;
     }
 
     @Override
@@ -49,7 +52,7 @@ public class ImageServiceImpl implements IimageService {
         try {
             all = imageRepository.findAll();
         } catch (Exception e) {
-            throw new ProductNotFoundException(e.getMessage());
+            throw new AppRuntimeException(e.getMessage());
 
         }
         return all;
@@ -80,7 +83,7 @@ public class ImageServiceImpl implements IimageService {
 //            image.setProduct(product);
             imageRepository.deleteById(imageId);
         } catch (Exception e) {
-            throw new ProductNotFoundException(e.getMessage());
+            throw new AppRuntimeException(e.getMessage());
         }
     }
 }

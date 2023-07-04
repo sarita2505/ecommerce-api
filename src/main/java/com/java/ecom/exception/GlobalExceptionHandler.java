@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class GlobalExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-    @ExceptionHandler(ProductNotFoundException.class)
+    @ExceptionHandler(AppRuntimeException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ErrorResponse handleProductNotFoundException(ProductNotFoundException ex) {
-        return new ErrorResponse("ProductNotFound", ex.getMessage());
+    public ErrorResponse handleProductNotFoundException(AppRuntimeException ex) {
+        return new ErrorResponse(ErrorCode.RESOURCE_NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
@@ -24,6 +24,6 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ErrorResponse handleException(Exception ex) {
         LOGGER.error("error while serving request: ",ex);
-        return new ErrorResponse("InternalServerError", "An unexpected error occurred");
+        return new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
     }
 }

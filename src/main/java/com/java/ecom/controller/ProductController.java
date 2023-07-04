@@ -1,9 +1,6 @@
 package com.java.ecom.controller;
 
 import com.java.ecom.entity.Product;
-import com.java.ecom.exception.ErrorResponse;
-import com.java.ecom.exception.GlobalExceptionHandler;
-import com.java.ecom.exception.ProductNotFoundException;
 import com.java.ecom.service.IProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

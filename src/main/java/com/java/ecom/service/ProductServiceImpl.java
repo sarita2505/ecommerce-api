@@ -1,9 +1,10 @@
 package com.java.ecom.service;
 
 import com.java.ecom.entity.Product;
-import com.java.ecom.exception.ProductNotFoundException;
+import com.java.ecom.exception.AppRuntimeException;
 import com.java.ecom.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class ProductServiceImpl implements IProductService {
+    @Autowired
     private ProductRepository productRepository;
 
     @Override
@@ -33,7 +35,7 @@ public class ProductServiceImpl implements IProductService {
                 return optionalUser.get();
             }
         } catch (Exception e) {
-            throw new ProductNotFoundException(e.getCause().getMessage());
+            throw new AppRuntimeException(e.getMessage());
         }
         return null;
     }
@@ -44,7 +46,7 @@ public class ProductServiceImpl implements IProductService {
         try {
             all = productRepository.findAll();
         } catch (Exception e) {
-            throw new ProductNotFoundException(e.getCause().getMessage());
+            throw new AppRuntimeException(e.getMessage());
         }
         return all;
     }
@@ -62,7 +64,7 @@ public class ProductServiceImpl implements IProductService {
         try {
             updatedroduct = productRepository.save(existingProduct);
         } catch (Exception e) {
-            throw new ProductNotFoundException(e.getCause().getMessage());
+            throw new AppRuntimeException(e.getMessage());
         }
         return updatedroduct;
     }
@@ -72,7 +74,7 @@ public class ProductServiceImpl implements IProductService {
         try {
             productRepository.deleteById(userId);
         } catch (Exception e) {
-            throw new ProductNotFoundException(e.getCause().getMessage());
+            throw new AppRuntimeException(e.getMessage());
         }
     }
 }
