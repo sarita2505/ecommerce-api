@@ -3,6 +3,7 @@ package com.java.ecom.controller;
 import com.java.ecom.entity.Image;
 import com.java.ecom.service.imageService.IimageService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RequestMapping("/products")
 public class ImageController {
+    @Autowired
     private IimageService imageService;
 
     @PostMapping("/{productId}/images")

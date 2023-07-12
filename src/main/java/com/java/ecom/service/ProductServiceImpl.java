@@ -33,11 +33,12 @@ public class ProductServiceImpl implements IProductService {
         try {
             if (optionalUser.isPresent()) {
                 return optionalUser.get();
+            }else{
+                throw new AppRuntimeException("resource for the id is not present");
             }
         } catch (Exception e) {
             throw new AppRuntimeException(e.getMessage());
         }
-        return null;
     }
 
     @Override
@@ -59,12 +60,13 @@ public class ProductServiceImpl implements IProductService {
         existingProduct.setPrice(product.getPrice());
         existingProduct.setDescription(product.getDescription());
         existingProduct.setProductType(product.getProductType());
-
+        existingProduct.setImage(product.getImage());
+        existingProduct.setAttributes(product.getAttributes());
         Product updatedroduct = null;
         try {
             updatedroduct = productRepository.save(existingProduct);
-        } catch (Exception e) {
-            throw new AppRuntimeException(e.getMessage());
+        } catch (RuntimeException e) {
+            throw e;
         }
         return updatedroduct;
     }

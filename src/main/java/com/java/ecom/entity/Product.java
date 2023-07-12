@@ -34,5 +34,7 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
 //    @JsonIgnoreProperties("product")
     private List<Image> image;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<ProductAttribute> attributes;
 }
+
