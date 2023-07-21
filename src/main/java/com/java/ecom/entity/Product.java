@@ -1,6 +1,7 @@
 package com.java.ecom.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.java.ecom.annotation.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class Product {
     //@Column(nullable = false)
     //private String[] images;
     private String description;
+    @ProductType
     private String productType;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")

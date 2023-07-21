@@ -5,18 +5,21 @@ import com.java.ecom.service.IProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Validated
 @RequestMapping("products")
 public class ProductController {
     private IProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
         Product savedUser = productService.createProduct(product);
         ResponseEntity<Product> productResponseEntity = null;
         productResponseEntity = new ResponseEntity<>(savedUser, HttpStatus.CREATED);
@@ -43,7 +46,7 @@ public class ProductController {
 
     @PutMapping("{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") String userId,
-                                                 @RequestBody Product product) {
+                                                  @RequestBody Product product) {
         product.setId(userId);
         Product updatedProduct = productService.updateProduct(product);
         ResponseEntity<Product> productResponseEntity = null;
